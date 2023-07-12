@@ -6,8 +6,12 @@ from ..services import Base
 from sqlalchemy_utils import EmailType
 
 
-
-# Declare Classes / Tables
+###########################################################################
+# Tabela de ligação entre Curos e Participante
+# Relacionamento Many-to-Many com campos extra na relação
+# A diferença do Many-to-Many simples é que nesse caso os 
+#   models não se relacionam entre si, mas diretamente com essa tabela
+###########################################################################
 class CursoParticipante(Base):
     __tablename__ = 'curso_participante'
     curso_id = Column(ForeignKey('cursos.id'), primary_key=True)
@@ -50,4 +54,21 @@ class Participante(Base):
     origem = Column(String, nullable=False)
     is_ativo = Column(Boolean, nullable=False)
     role = Column(String, nullable=False)
+    
     cursos = relationship("CursoParticipante", back_populates="participante")
+    cursos_externos = relationship("CursoExterno", back_populates="participante")
+
+class CursoExterno(Base):
+    __tablename__ = 'curso_externo'
+    id = Column(Integer, primary_key=True)
+    nome = Column(String, nullable=False)
+    ch_curso = Column(Integer, nullable=False)
+    ch_valida = Column(Integer, nullable=True, default=0)
+    inst_promotora = Column(String, nullable=False)
+    data_inicio = Column(DateTime, default=datetime.datetime.utcnow)
+    data_fim = Column(DateTime, default=datetime.datetime.utcnow)
+    modalidade = Column(String, nullable=False)
+
+    participante_id = Column(Integer, ForeignKey('participantes.id'))
+
+    participante = relationship("Participante", back_populates="cursos_externos")

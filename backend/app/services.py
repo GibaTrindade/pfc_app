@@ -1,4 +1,6 @@
 from .configs.db import SessionLocal, Base, engine
+from .models.models import *
+
 
 def create_database():
     return Base.metadata.create_all(bind=engine)

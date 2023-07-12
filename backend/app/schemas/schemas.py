@@ -17,19 +17,6 @@ class ParticipanteBase(BaseModel):
         orm_mode = True
         allow_population_by_field_name = True
 
-#Classe criada apenas para fins de response_model
-class ParticipanteCurso(BaseModel):
-    id: int
-    nome: str
-    email:str
-    cpf: str
-    is_ativo: bool
-    role: str
-    status: str
-    condicao_acao: str
-    ch_valida: int
-    inscricao: bool
-
 
 class CursoBase(BaseModel):
     id: int# = Field(alias='book_id')
@@ -48,6 +35,20 @@ class CursoBase(BaseModel):
     class Config:
         orm_mode = True
         allow_population_by_field_name = True
+
+
+#Classe criada apenas para fins de response_model
+class ParticipanteCurso(BaseModel):
+    id: int
+    nome: str
+    email:str
+    cpf: str
+    is_ativo: bool
+    role: str
+    status: str
+    condicao_acao: str
+    ch_valida: int
+    inscricao: bool
 
 
 class CursoSchema(CursoBase):

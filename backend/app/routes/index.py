@@ -1,1 +1,2 @@
-from .routes import pfc
+from .curso import *
+from .participante import *

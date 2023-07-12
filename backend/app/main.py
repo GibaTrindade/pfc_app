@@ -3,13 +3,15 @@ FastAPI app called 'Bookipedia' that serves information about books and their au
 "many-to-many" relationship *with* extra data. This solution uses SQLAlchemy Association Proxies
 """
 from fastapi import FastAPI
-from .routes.index import pfc
+from .routes.index import curso, participante
 from fastapi.middleware.cors import CORSMiddleware
 
 
 app = FastAPI(title="PFC")
 
-app.include_router(pfc)
+app.include_router(curso)
+app.include_router(participante)
+
 
 
 origins = [
