@@ -19,7 +19,7 @@ async def get_author(id: int, db: orm.Session = Depends(get_db)):
 @participante.get("/participantes")#, response_model=List[ParticipanteSchema],
          #response_model_exclude={'blurb'}, response_model_by_alias=False)
 async def get_authors(db: orm.Session = Depends(get_db)):
-    db_participantes = db.query(Participante).options(joinedload(Participante.cursos)).all()
+    db_participantes = db.query(Participante).order_by(Participante.nome).options(joinedload(Participante.cursos)).all()
     return db_participantes
     
     lista_autores=[]

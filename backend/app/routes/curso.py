@@ -1,10 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import orm
 from sqlalchemy.orm import joinedload
+from sqlalchemy import desc
 from typing import List
 from ..services import get_db
 from ..models.models import Curso
 from ..schemas.schemas import CursoSchema
+
 
 curso = APIRouter()
 
@@ -51,7 +53,7 @@ async def get_book(id: int, db: orm.Session = Depends(get_db)):
 @curso.get("/cursos", response_model=List[CursoSchema],
          response_model_exclude={'blurb'}, response_model_by_alias=False)
 async def get_books(db: orm.Session = Depends(get_db)):
-    db_cursos = db.query(Curso).options(joinedload(Curso.participantes)).all()
+    db_cursos = db.query(Curso).order_by(desc(Curso.data_fim)).options(joinedload(Curso.participantes)).all()
     #return db_cursos
     lista_cursos=[]
     
